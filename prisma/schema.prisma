@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String        @unique
+  email       String        @unique
+  password    String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  assignments Assignment[]  @relation("UserAssignments")
+
+  @@map("users")
+}
+
+model Item {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  imageUri    String[]
+  status      ItemStatus    @default(SIPARIS) // Holds the latest status
+  time        DateTime      //NO NEED I THINK
+  active      Boolean       @default(true)
+  assignments Assignment[]  @relation("ItemAssignments")
+
+  @@map("items")
+}
+
+model Assignment {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String        @db.ObjectId
+  itemId      String        @db.ObjectId
+  status      ItemStatus
+  assignedAt  DateTime      @default(now()) // Timestamp for when the status is assigned
+  user        User          @relation("UserAssignments", fields: [userId], references: [id])
+  item        Item          @relation("ItemAssignments", fields: [itemId], references: [id])
+
+  @@map("assignments")
+}
+
+model InvitationCode {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  code      String   @unique
+}
+
+
+enum ItemStatus {
+  SIPARIS
+  YAZILDI
+  HAZIRLANIYOR
+  YOLDA
+  TESLIMEDILDI
+}
