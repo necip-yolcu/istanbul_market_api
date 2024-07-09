@@ -1,8 +1,22 @@
-const { PrismaClient, ItemStatus } = require('@prisma/client');
-const fs = require('fs-extra');
+import { PrismaClient, ItemStatus } from '@prisma/client';
+import { existsSync, createReadStream } from 'fs-extra';
+import { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
-const createItem = async (req, res) => {
+interface AuthRequest extends Request {
+  body: {
+    userId: string;
+    title: string;
+    description: string;
+    itemId?: string;
+    status: ItemStatus;
+  };
+  //files?: Express.Multer.File[];
+  //files?: MulterFile[] | { [fieldname: string]: MulterFile[] };
+  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
+}
+
+const createItem = async (req: AuthRequest, res: Response): Promise<void> => {
   console.log("createItem_API welcome: ", req.body)
   const { userId, title, description } = req.body;
 
@@ -11,16 +25,18 @@ const createItem = async (req, res) => {
       where: { id: userId },
     })
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      res.status(404).json({ error: 'User not found' });
+      return;
     }
     //console.log("user_API: ", user)
     console.log("files: ", req?.files)
 
      if (!req.files || req.files.length === 0) {
       console.log("No files uploaded")
-      return res.status(400).json({ message: 'No files uploaded' });
+      res.status(400).json({ message: 'No files uploaded' });
+      return;
     }
-    const filePaths = req.files.map(file => file.path);
+    const filePaths = (req.files as Express.Multer.File[]).map(file => file.path);
     console.log("filePaths: ", filePaths)
   
     const newItem = await prisma.item.create({
@@ -54,9 +70,9 @@ const createItem = async (req, res) => {
   }
 };
 
-const getAllItems = async (req, res) => {
+const getAllItems = async (req: Request, res: Response): Promise<void> => {
   try {
-    const skip = req.query.skip ? parseInt(req.query.skip) : 0; // Get skip value from query parameter, default to 0 if not provided
+    const skip = req.query.skip ? parseInt(req.query.skip as string) : 0; // Get skip value from query parameter, default to 0 if not provided
     const status = req.query.status || 'All';
 
     console.log('skip_limit ', skip)
@@ -116,7 +132,7 @@ const getAllItems = async (req, res) => {
   }
 };
 
-const getCountsByStatus = async (req, res) => {
+const getCountsByStatus = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log("getCountsByStatus_ WELCOME")
     // Use Prisma to group items by status and count the number of items in each group
@@ -144,7 +160,7 @@ const getCountsByStatus = async (req, res) => {
   }
 };
 
-const getCountsByDate = async (req, res) => {
+const getCountsByDate = async (req: Request, res: Response): Promise<void> => {
   try {
     const currentDate = new Date();
 
@@ -233,7 +249,7 @@ const getCountsByDate = async (req, res) => {
   }
 };
 
-const updateStatus = async (req, res) => {
+const updateStatus = async (req: AuthRequest, res: Response): Promise<void> => {
   const { itemId } = req.params
   const { userId, status } = req.body;
   console.log("updateStatus__API: ", itemId, userId, status);
@@ -245,7 +261,8 @@ const updateStatus = async (req, res) => {
     });
 
     if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
+      res.status(404).json({ message: 'Item not found' });
+      return;
     }
 
     // Update the item's status
@@ -275,16 +292,17 @@ const updateStatus = async (req, res) => {
   }
 };
 
-const uploadPhoto = async (req, res) => {
+const uploadPhoto = async (req: AuthRequest, res: Response): Promise<void> => {
   console.log('file', req.files);
   console.log('body', req.body);
 
   const { itemId } = req.body;
   try {
     if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: 'No files uploaded' });
+      res.status(400).json({ message: 'No files uploaded' });
+      return;
     }
-    const filePaths = req.files.map(file => file.path);
+    const filePaths = (req.files as Express.Multer.File[]).map(file => file.path);
     console.log("filePaths: ", filePaths)
 
     // Assuming you have a field `imageUris` in the `item` model which is an array of strings.
@@ -299,15 +317,15 @@ const uploadPhoto = async (req, res) => {
   }
 };
 
-const getImage = (req, res) => {
+const getImage = (req: Request, res: Response): void => {
   console.log("getImage: ", req.params)
   const imageName = req.params.imageName;
   const imagePath = `images/${imageName}`;
   
   try {
-    if(imagePath && fs.existsSync(imagePath)) {
+    if(imagePath && existsSync(imagePath)) {
       console.log("imagePath: ", imagePath)
-      const fileStream = fs.createReadStream(imagePath);
+      const fileStream = createReadStream(imagePath);
 		  fileStream.pipe(res);
     } else {
       res.status(404).send('File not found');
@@ -318,7 +336,7 @@ const getImage = (req, res) => {
   }
 };
 
-const deleteItem = async (req, res) => {
+const deleteItem = async (req: Request, res: Response): Promise<void> => {
   try {
     const { itemId } = req.params;
 
@@ -354,4 +372,4 @@ const deleteItem = async (req, res) => {
   }
 };
 
-module.exports = { createItem, getAllItems, getCountsByStatus, getCountsByDate, updateStatus, uploadPhoto, getImage, deleteItem };
+export { createItem, getAllItems, getCountsByStatus, getCountsByDate, updateStatus, uploadPhoto, getImage, deleteItem };

@@ -1,7 +1,7 @@
 // routes/userRoutes.js
-const express = require('express');
-const { generateCode, validateCode, createUser, loginUser, getUsers } = require('./userController');
-const router = express.Router();
+import express, { Router } from 'express';
+import { generateCode, validateCode, createUser, loginUser, getUsers } from './userController';
+const router: Router = express.Router();
 
 router.post('/generate-invitation-code', generateCode);
 router.post('/validate-invitation-code', validateCode);
@@ -10,4 +10,4 @@ router.post('/register', createUser);
 router.post('/login', loginUser);
 router.get('/listUsers',getUsers);
 
-module.exports = router;
+export default router;

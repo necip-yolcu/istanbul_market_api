@@ -1,9 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import express, { Request, Response } from "express";
 
-const userRoutes = require('./user/userRoutes');
-const itemRoutes = require('./item/itemRoutes');
+import bodyParser from 'body-parser';
+import cors from 'cors';
+
+import userRoutes from './user/userRoutes';
+import itemRoutes from './item/itemRoutes';
 
 const app = express();
 app.use(cors());
@@ -18,12 +19,12 @@ const users = [
 ];
 
 // GET /user
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.json(users);
 });
 
 // GET /user/:id
-app.get('/:id', (req, res) => {
+app.get('/:id', (req: Request, res: Response) => {
   const user = users.find(u => u.id === parseInt(req.params.id));
   if (user) {
     res.json(user);

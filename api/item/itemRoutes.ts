@@ -1,17 +1,17 @@
 // routes/itemRoutes.js
-const express = require('express');
-const { createItem, getAllItems, updateStatus, getCountsByStatus, getCountsByDate, uploadPhoto, getImage, deleteItem } = require('./itemController');
-const { authenticate } = require('../middleware/authenticate');
-const multer = require('multer');
+import { Router, Request, Response, NextFunction } from 'express';
+import { createItem, getAllItems, updateStatus, getCountsByStatus, getCountsByDate, uploadPhoto, getImage, deleteItem } from './itemController';
+import { authenticate } from '../middleware/authenticate';
+import multer, { diskStorage, StorageEngine } from 'multer';
 
-const router = express.Router();
+const router = Router();
 
-const storage = multer.diskStorage({
-    destination(req, file, callback) {
+const storage: StorageEngine = diskStorage({
+    destination(req: Request, file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) {
         console.log("destination: ", file)
         callback(null, './images');
     },
-    filename(req, file, callback) {
+    filename(req: Request, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) {
         console.log("filename: ", file)
         callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
     },
@@ -30,4 +30,4 @@ router.get('/images/:imageName', getImage);
 router.delete('/delete/:itemId', /*authenticate,*/ deleteItem);
 
 
-module.exports = router;
+export default router;
