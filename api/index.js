@@ -18,12 +18,12 @@ const users = [
 ];
 
 // GET /user
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.json(users);
 });
 
 // GET /user/:id
-router.get('/:id', (req, res) => {
+app.get('/:id', (req, res) => {
   const user = users.find(u => u.id === parseInt(req.params.id));
   if (user) {
     res.json(user);
