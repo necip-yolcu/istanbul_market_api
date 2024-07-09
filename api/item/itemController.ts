@@ -103,16 +103,16 @@ const getAllItems = async (req: Request, res: Response): Promise<void> => {
         }
       },
     })
-      .then((items) => {
+      .then((items: any) => {
         console.log("items: ", items.length)
 
-        const itemsWithFullHistory = items.map((item, index) => {
+        const itemsWithFullHistory = items.map((item: any, index: any) => {
           console.log("item: ",index, " ", item.title)
           return {
             ...item,
             numItemsByStatus,
             latestStatus: item.status,
-            statusHistory: item.assignments.map(assignment => ({
+            statusHistory: item.assignments.map((assignment: any) => ({
                 status: assignment.status,
                 userName: assignment.user.name,
                 assignedAt: assignment.assignedAt,
