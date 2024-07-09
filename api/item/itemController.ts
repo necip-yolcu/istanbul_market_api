@@ -9,7 +9,7 @@ interface AuthRequest extends Request {
     title: string;
     description: string;
     itemId?: string;
-    status: any;
+    status: ItemStatus;
   };
   //files?: Express.Multer.File[];
   //files?: MulterFile[] | { [fieldname: string]: MulterFile[] };
