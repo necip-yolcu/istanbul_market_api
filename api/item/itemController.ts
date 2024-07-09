@@ -9,7 +9,7 @@ interface AuthRequest extends Request {
     title: string;
     description: string;
     itemId?: string;
-    status: ItemStatus;
+    status: any;
   };
   //files?: Express.Multer.File[];
   //files?: MulterFile[] | { [fieldname: string]: MulterFile[] };
@@ -123,7 +123,7 @@ const getAllItems = async (req: Request, res: Response): Promise<void> => {
         res.status(200).json(itemsWithFullHistory);
         return items
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.log("hatamız: ",err)
         res.status(500).json({ error: 'Failed to fetch items000' });
       });
@@ -146,7 +146,7 @@ const getCountsByStatus = async (req: Request, res: Response): Promise<void> => 
 
 
     // Transform the result to a more readable format
-    const result = counts.map(group => ({
+    const result = counts.map((group: any) => ({
       status: group.status,
       count: group._count._all,
     }));
@@ -349,7 +349,7 @@ const deleteItem = async (req: Request, res: Response): Promise<void> => {
 
     // Delete each assignment related to the item
     await Promise.all(
-      assignments.map(async (assignment) => {
+      assignments.map(async (assignment: any) => {
         await prisma.assignment.delete({
           where: {
             id: assignment.id,
