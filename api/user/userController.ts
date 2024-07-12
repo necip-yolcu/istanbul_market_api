@@ -3,7 +3,7 @@ import { genSalt, hash, compare } from 'bcrypt';
 import { sign, verify, JwtPayload } from 'jsonwebtoken';
 import { PrismaClient/* , User, InvitationCode */ } from '@prisma/client';
 
-//const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 /* 
 interface AuthRequest extends Request {
   body: {
@@ -76,7 +76,7 @@ const getUsers = async (req: Request, res: Response) => {
     { id: 2, name: 'Jane Smith' }
   ];
 
-  res.json(users);
+  return res.json(users);
   /* try {
     const users = await prisma.user.findMany({
       select: {
