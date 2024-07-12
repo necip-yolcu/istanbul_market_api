@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { genSalt, hash, compare } from 'bcrypt';
-import { sign, verify, JwtPayload } from 'jsonwebtoken';
+//import { genSalt, hash, compare } from 'bcrypt';
+//import { sign, verify, JwtPayload } from 'jsonwebtoken';
 //import { PrismaClient/* , User, InvitationCode */ } from '@prisma/client';
 
 //const prisma = new PrismaClient();
@@ -71,7 +71,12 @@ const loginUser = async (req: AuthRequest, res: Response): Promise<void> => {
 }; */
 
 const getUsers = async (req: Request, res: Response) => {
-  return "selam"
+  const users = [
+    { id: 1, name: 'John Doe' },
+    { id: 2, name: 'Jane Smith' }
+  ];
+
+  res.json(users);
   /* try {
     const users = await prisma.user.findMany({
       select: {
