@@ -70,8 +70,9 @@ const loginUser = async (req: AuthRequest, res: Response): Promise<void> => {
   }
 };
 
-const getUsers = async (req: Request, res: Response): Promise<void> => {
-  try {
+const getUsers = async (req: Request, res: Response) => {
+  return "selam"
+  /* try {
     const users = await prisma.user.findMany({
       select: {
         id: true,
@@ -84,7 +85,7 @@ const getUsers = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve users' });
     return;
-  }
+  } */
 };
 
 const generateCode = async (req: Request, res: Response): Promise<void> => {
