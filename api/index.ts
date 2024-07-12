@@ -32,12 +32,12 @@ app.get('/:id', (req: Request, res: Response) => {
     res.status(404).json({ message: 'User not found' });
   }
 });
-///////////////////////////
+///////////////////////////*/
 
 
 // Use routes
 app.use('/user', userRoutes);
-app.use('/item', itemRoutes); */
+app.use('/item', itemRoutes); 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
