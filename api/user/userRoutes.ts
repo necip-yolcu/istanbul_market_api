@@ -1,6 +1,7 @@
 // routes/userRoutes.js
 import express, { Router } from 'express';
-import { generateCode, validateCode, createUser, loginUser, getUsers } from './userController';
+//import { generateCode, validateCode, createUser, loginUser, getUsers } from './userController';
+import { getUsers } from './userController';
 const router: Router = express.Router();
 
 // router.post('/generate-invitation-code', generateCode);

@@ -4,7 +4,7 @@ import { sign, verify, JwtPayload } from 'jsonwebtoken';
 //import { PrismaClient/* , User, InvitationCode */ } from '@prisma/client';
 
 //const prisma = new PrismaClient();
-
+/* 
 interface AuthRequest extends Request {
   body: {
     email: string;
@@ -68,7 +68,7 @@ const loginUser = async (req: AuthRequest, res: Response): Promise<void> => {
     res.status(500).json({ error: 'Failed to authenticate user' });
     return;
   }
-};
+}; */
 
 const getUsers = async (req: Request, res: Response) => {
   return "selam"
@@ -87,7 +87,7 @@ const getUsers = async (req: Request, res: Response) => {
     return;
   } */
 };
-
+/* 
 const generateCode = async (req: Request, res: Response): Promise<void> => {
   try {
     const code = sign({}, process.env.JWT_SECRET || '', { expiresIn: '5m' });
@@ -145,3 +145,6 @@ const validateCode = async (req: AuthRequest, res: Response): Promise<void> => {
 };
 
 export { createUser, loginUser, getUsers, generateCode, validateCode };
+ */
+
+export { getUsers}
