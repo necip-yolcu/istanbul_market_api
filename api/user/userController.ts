@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-//import { genSalt, hash, compare } from 'bcrypt';
-//import { sign, verify, JwtPayload } from 'jsonwebtoken';
-//import { PrismaClient/* , User, InvitationCode */ } from '@prisma/client';
+import { genSalt, hash, compare } from 'bcrypt';
+import { sign, verify, JwtPayload } from 'jsonwebtoken';
+import { PrismaClient/* , User, InvitationCode */ } from '@prisma/client';
 
 //const prisma = new PrismaClient();
 /* 

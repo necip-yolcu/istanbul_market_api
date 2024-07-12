@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 ///////////////////////////
 // Mock user data
 const users = [
-  { id: 1, name: 'John Doe' },
-  { id: 2, name: 'Jane Smith' }
+  { id: 1, name: 'John1 Doe' },
+  { id: 2, name: 'Jane1 Smith' }
 ];
 
 // GET /user
