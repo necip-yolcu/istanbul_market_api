@@ -23,7 +23,7 @@ app.get('/', (req: Request, res: Response) => {
   res.json(users);
 });
 
-// GET /user/:id
+/* // GET /user/:id
 app.get('/:id', (req: Request, res: Response) => {
   const user = users.find(u => u.id === parseInt(req.params.id));
   if (user) {
@@ -37,7 +37,7 @@ app.get('/:id', (req: Request, res: Response) => {
 
 // Use routes
 app.use('/user', userRoutes);
-app.use('/item', itemRoutes);
+app.use('/item', itemRoutes); */
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
