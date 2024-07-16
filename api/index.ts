@@ -37,7 +37,7 @@ app.get('/:id', (req: Request, res: Response) => {
 
 // Use routes
 app.use('/user', userRoutes);
-//app.use('/item', itemRoutes); 
+app.use('/item', itemRoutes); 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
