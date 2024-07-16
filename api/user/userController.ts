@@ -3,7 +3,7 @@ import { genSalt, hash, compare } from 'bcrypt';
 import { sign, verify, JwtPayload } from 'jsonwebtoken';
 import { PrismaClient/* , User, InvitationCode */ } from '@prisma/client';
 
-//const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 /* 
 interface AuthRequest extends Request {
   body: {
@@ -71,13 +71,13 @@ const loginUser = async (req: AuthRequest, res: Response): Promise<void> => {
 }; */
 
 const getUsers = async (req: Request, res: Response) => {
-  const users = [
+  /* const users = [
     { id: 1, name: 'John Doe' },
     { id: 2, name: 'Jane Smith' }
   ];
 
-  return res.json(users);
-  /* try {
+  return res.json(users); */
+  try {
     const users = await prisma.user.findMany({
       select: {
         id: true,
@@ -90,7 +90,7 @@ const getUsers = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve users' });
     return;
-  } */
+  }
 };
 /* 
 const generateCode = async (req: Request, res: Response): Promise<void> => {
