@@ -99,7 +99,7 @@ const getAllItems = async (req: Request, res: Response): Promise<void> => {
               select: { name: true, email: true }
             }
           }, 
-          orderBy: { assignedAt: 'asc' }  // for status history of assignments
+          orderBy: { assignedAt: 'desc' }  // for status history of assignments
         }
       },
     })
