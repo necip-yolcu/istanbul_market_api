@@ -108,7 +108,7 @@ const getAllItems = async (req: Request, res: Response): Promise<void> => {
         console.log("items: ", items.length)
 
         const itemsWithFullHistory = items.map((item: any, index: any) => {
-          console.log("item: ",index, " ", item.title)
+          console.log("item: ",index, " ", item.title, item.time)
           return {
             ...item,
             numItemsByStatus,
