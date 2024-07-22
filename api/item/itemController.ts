@@ -102,7 +102,7 @@ const getAllItems = async (req: Request, res: Response): Promise<void> => {
           orderBy: { assignedAt: 'asc' }  // for status history of assignments
         }
       },
-      orderBy: { time: 'desc' } // for status history
+      //orderBy: { time: 'desc' } // for status history
     })
       .then((items: any) => {
         console.log("items: ", items.length)
