@@ -12,6 +12,7 @@ model User {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
   name        String        @unique
   email       String        @unique
+  role        UserRole?     @default(STAFF)
   password    String
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -57,4 +58,9 @@ enum ItemStatus {
   HAZIRLANIYOR
   YOLDA
   TESLIMEDILDI
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
 }
