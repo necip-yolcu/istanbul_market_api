@@ -32,7 +32,7 @@ const authenticate = async (req: AuthRequest, res: Response, next: NextFunction)
       return;
     }
 
-    const user = await prisma.user.findUnique({ where: { id: decoded?.userId} });
+    const user = await prisma.user.findUnique({ where: { id: userId} });
 
     if (!user) {
       res.status(404).json({ error: 'User not found' });

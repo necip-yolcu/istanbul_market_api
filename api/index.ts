@@ -18,17 +18,8 @@ mongoose.connect(process.env.DATABASE_URL as string)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-
-///////////////////////////
-// Mock user data
-const users = [
-  { id: 1, name: 'John1 Doe' },
-  { id: 2, name: 'Jane1 Smith' }
-];
-
-// GET /user
 app.get('/', (req: Request, res: Response) => {
-  res.json(users);
+  res.json({ message: 'Welcome to the API!' });
 });
 
 // Use routes
